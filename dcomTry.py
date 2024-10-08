@@ -16,15 +16,13 @@ def run_dcomexec(ip, user_pass, object_name):
         stdout, stderr = process.communicate(timeout=2)  # Use a timeout to avoid hanging, since you catch a reverse shell. might need to increase for no false-positive!
 
         # Analyze the output for known error messages
-        if 'rpc_s_access_denied' in stdout.lower() or \
-           'co_e_runas_logon_failure' in stdout.lower() or \
-           'dcom sessionerror' in stdout.lower():
+        if 'denied' in stdout.lower() or \
+           'failure' in stdout.lower() or \
+           'sessionerror' in stdout.lower():
             #print(f"No rights with: {command}")
             return False
         
-        # You shouldnt get these
-        if stderr.strip():
-            print(f"Unexpected Output: {command} - {stderr.strip()}")
+        # You shouldnt get this
         else:
             print(f"Unknown Result: {command} - {stdout.strip()}")
         
@@ -53,7 +51,6 @@ def main(ip_file, user_pass_file):
     print("finished")
 
 if __name__ == "__main__":
-    # Set up argument parsing
     parser = argparse.ArgumentParser(description="DCOM Check Tool")
     parser.add_argument('-i', '--ipfile', type=str, required=True,
                         help='Path to the file containing IP addresses (one per line).')
@@ -62,5 +59,4 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
 
-    # Run the main function with provided arguments
     main(args.ipfile, args.userpassfile)
