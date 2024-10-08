@@ -4,7 +4,7 @@ a quick and dirty tool to brute-force-test if dcomexec.py is possible on a targe
 
 ## Usage
 ```
-usage: dcom_check_tool.py [-h] -i IPFILE -u USERPASSFILE
+usage: dcomTry.py [-h] -i IPFILE -u USERPASSFILE
 
 DCOM Check Tool
 
